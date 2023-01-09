@@ -1,22 +1,24 @@
-#include "lists.h"
+#include <Python.h>
 /**
- * is_palindrome - checks if palindrome
- * @head: head of node
- * Return: 0 if not, 1 if is
+ * print_python_list_info - Prints basic info about Python lists.
+ * @p: A PyObject list.
  */
-int is_palindrome(listint_t **head)
+void print_python_list_info(PyObject *p)
 {
-	unsigned int len = 1;
-	listint_t *temp;
+	int size, alloc, i;
+	PyObject *obj;
 
-	if (head == NULL|| *head == NULL)
-		return (1);
+	size = Py_SIZE(p);
+	alloc = ((PyListObject *)p)->allocated;
 
-	temp = *head;
-	while (temp) /* get len of list */
+	printf("[*] Size of the Python List = %d\n", size);
+	printf("[*] Allocated = %d\n", alloc);
+
+	for (i = 0; i < size; i++)
 	{
-		temp = temp->next;
-		len++;
+		printf("Element %d: ", i);
+
+		obj = PyList_GetItem(p, i);
+		printf("%s\n", Py_TYPE(obj)->tp_name);
 	}
-	return (0);
 }
