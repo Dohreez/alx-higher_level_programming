@@ -1,56 +1,89 @@
 #!/usr/bin/python3
+
 def roman_to_int(roman_string):
 
-    """Converts a roman numeral to an integer."""
+    # Fail checks, none, not a string
 
-    if (not isinstance(roman_string, str) or
+    if not roman_string:
 
-            roman_string is None):
+        return 0
 
-        return (0)
+    if not isinstance(roman_string, str):
 
+        return 0
 
+    if not roman_string.isupper():
 
-    roman_dict = {
+        return 0
 
-            "I": 1,
+    # Dictionary for roman numerals
 
-            "V": 5,
+    r_dict = {
 
-            "X": 10,
+        "I": 1,
 
-            "L": 50,
+        "IV": 4,
 
-            "C": 100,
+        "V": 5,
 
-            "D": 500,
+        "IX": 9,
 
-            "M": 1000
+        "X": 10,
+
+        "L": 50,
+
+        "C": 100,
+
+        "D": 500,
+
+        "M": 1000
 
     }
 
-    num = 0
 
 
+    result = 0
 
-    for i in range(len(roman_string)):
+    temp = list(roman_string)
 
-        if roman_dict.get(roman_string[i], 0) == 0:
+    # Concat 4 and 9s
 
-            return (0)
+    if len(temp) > 1:
 
+        idx = 0
 
+        for i in temp:
 
-        if (i != (len(roman_string) - 1) and
+            try:
 
-                roman_dict[roman_string[i]] < roman_dict[roman_string[i + 1]]):
+                if temp[idx] == 'I' and temp[idx + 1] == 'V':
 
-                num += roman_dict[roman_string[i]] * -1
+                    temp[idx:idx + 2] = [''.join(temp[idx:idx + 2])]
 
+            except IndexError:
 
+                pass
 
-        else:
+            try:
 
-            num += roman_dict[roman_string[i]]
+                if temp[idx] == 'I' and temp[idx + 1] == 'X':
 
-    return (num)
+                    temp[idx:idx + 2] = [''.join(temp[idx:idx + 2])]
+
+            except IndexError:
+
+                pass
+
+            idx += 1
+
+    # Search in dict for correct numbers and add
+
+    for k, v in r_dict.items():
+
+        for index in temp:
+
+            if index == k:
+
+                result += v
+
+    return result
