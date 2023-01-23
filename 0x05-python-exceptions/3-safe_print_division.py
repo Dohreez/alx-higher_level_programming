@@ -1,27 +1,18 @@
 #!/usr/bin/python3
+def safe_print_division(a, b):
 
-def safe_print_list_integers(my_list=[], x=0):
+    """Returns the division of a by b."""
 
-    count = 0
+    try:
 
-    errors = 0
+        div = a / b
 
-    while count < x:
+    except (TypeError, ZeroDivisionError):
 
-        try:
+        div = None
 
-            print("{:d}".format(my_list[count]), end='')
+    finally:
 
-            count += 1
+        print("Inside result: {}".format(div))
 
-        except (ValueError, TypeError):
-
-            count += 1
-
-            errors += 1
-
-    count -= errors
-
-    print()
-
-    return count
+    return (div)
