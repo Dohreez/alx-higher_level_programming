@@ -1,11 +1,18 @@
 #!/usr/bin/node
-const size = Math.floor(Number(process.argv[2]));
+const size = parseInt(process.argv[2]);
+
 if (isNaN(size)) {
-  console.log('Missing size');
+  console.log("Missing size");
 } else {
-  for (let r = 0; r < size; r++) {
-    let row = '';
-    for (let c = 0; c < size; c++) row += 'X';
-    console.log(row);
+  const edge = "X";
+  const inside = " ";
+  let printLine;
+  for (let i = 1; i <= size; i++) {
+    if (i === 1 || i === size) {
+      printLine = Array(size + 1).join(edge);
+    } else {
+      printLine = edge + Array(size - 1).join(inside) + edge;
+    }
+    console.log(printLine);
   }
 }
